@@ -22,7 +22,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:3.2.2") //  или более поздняя версия
     implementation("org.springframework.boot:spring-boot-devtools") // добавляем spring-boot-devtools
-
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.1")
 }
 
 
