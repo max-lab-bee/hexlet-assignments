@@ -1,12 +1,19 @@
 package exercise;
 
-import java.util.Iterator;
+
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 import exercise.model.Post;
 
@@ -47,10 +54,8 @@ public class Application {
                     return ResponseEntity.ok(post);
                 })
                 .orElse(ResponseEntity.noContent().build());
-
+    }
+}
         // END
 
-
-        }
-    }
 
