@@ -5,9 +5,11 @@ import java.util.Optional;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import exercise.model.Post;
+import org.springframework.web.server.ResponseStatusException;
 
 @SpringBootApplication
 @RestController
@@ -16,6 +18,7 @@ public class Application {
     private static List<Post> posts = Data.getPosts();
 
     public static void main(String[] args) {
+
         SpringApplication.run(Application.class, args);
     }
 
@@ -27,32 +30,34 @@ public class Application {
     }
 
     @GetMapping("/posts") // Список постов
-    public List<Post> index(@RequestParam(defaultValue = "10") Integer limit) {
-        return posts.stream().limit(limit).toList();
+    public List<Post> index() {
+        return posts;
     }
 
     @GetMapping("/posts/{id}")//просмотр конкретного поста
     public Optional<Post> show(@PathVariable String id) {
         var post = posts.stream()
-                .filter(p -> p.equals(id))
+                .filter(p -> p.getId().equals(id))
                 .findFirst();
         return post;
     }
 
     @PutMapping("/posts/{id}") // Обновление страницы
-    public Post update(@PathVariable String id) {
+    public Post update(@PathVariable String id, @RequestBody Post data) {
         var maybePost = posts.stream()
-                .filter(p -> p.equals(id))
+                .filter(p -> p.getId().equals(id))
                 .findFirst();
-        if (maybePost.isPresent()) {
-            var post = maybePost.get();
-            post.setId("Hello!");
+        if (maybePost.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with id '" + id + "' not found");
         }
-        return null;
+        var post = maybePost.get();
+        post.setTitle(data.getTitle());
+        post.setBody(data.getBody());
+        return post;
     }
     @DeleteMapping("/posts/{id}") // Удаление страницы
     public void destroy(@PathVariable String id) {
-        posts.removeIf(p -> p.equals(id));
+        posts.removeIf(p -> p.getId().equals(id));
     }
 }
 // END

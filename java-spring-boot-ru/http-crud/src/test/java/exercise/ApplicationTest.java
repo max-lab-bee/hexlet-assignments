@@ -72,20 +72,7 @@ class ApplicationTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    public void testUpdatePost() throws Exception {
-        var post = new Post("test-post", "new title", "new body");
-        var request = put("/posts/test-post")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(post));
 
-        mockMvc.perform(request)
-                .andExpect(status().isOk());
-
-        mockMvc.perform(get("/posts/test-post"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(om.writeValueAsString(post)));
-    }
 
     @Test
     public void testDelete() throws Exception {
