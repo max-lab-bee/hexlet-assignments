@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import exercise.model.Post;
 
-import static org.springframework.http.ResponseEntity.*;
+import static org.springframework.http.ResponseEntity.ok;
 
 @SpringBootApplication
 @RestController
@@ -56,6 +56,6 @@ public class Application {
                 .orElse(ResponseEntity.noContent().build());
     }
 }
-        // END
+// END
 
 
