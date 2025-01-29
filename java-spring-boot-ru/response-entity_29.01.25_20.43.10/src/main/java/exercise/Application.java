@@ -28,7 +28,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
     // BEGIN
-    // GET /posts - список всех постов, 200 OK, X-Total-Count заголовок
+
     @GetMapping
     public ResponseEntity<List<Post>> index() {
         HttpHeaders headers = new HttpHeaders();
@@ -36,7 +36,7 @@ public class Application {
         return ResponseEntity.ok().headers(headers).body(posts);
     }
 
-    // GET /posts/{id} - просмотр конкретного поста, 200 OK или 404 Not Found
+
     @GetMapping("/{id}")
     public ResponseEntity<Post> show(@PathVariable String id) {
         return posts.stream()
@@ -46,14 +46,14 @@ public class Application {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // POST /posts - создание нового поста, 201 Created
+
     @PostMapping
     public ResponseEntity<Post> create(@RequestBody Post post) {
         posts.add(post);
         return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
 
-    // PUT /posts/{id} - обновление поста, 200 OK или 204 No Content
+
     @PutMapping("/{id}")
     public ResponseEntity<Post> update(@PathVariable String id, @RequestBody Post postData) {
         return posts.stream()
