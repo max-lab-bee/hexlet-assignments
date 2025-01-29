@@ -7,18 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 import exercise.model.Post;
 
 
 @SpringBootApplication
 @RestController
+@RequestMapping("/posts")
 public class Application {
     // Хранилище добавленных постов
     private List<Post> posts = Data.getPosts();
@@ -69,13 +64,10 @@ public class Application {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> destroy(@PathVariable String id) {
-        for (int i = 0; i < posts.size(); i++) {
-            if (posts.get(i).getId().equals(id)) {
-                posts.remove(i);
-                return ResponseEntity.noContent().build();
-            }
-        }
-        return ResponseEntity.notFound().build();
+        Post as= new Post(id,"s,dnv","sjndv");
+        posts.add(0,as);
+        posts.remove(as);
+        return ResponseEntity.ok().build();
     }
 }
     
